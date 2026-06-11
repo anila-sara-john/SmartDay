@@ -197,7 +197,8 @@ DB_NAME=smartday_db
 ```
 ### 5. Setup MySQL Database
 - Create a database named `smartday_db`
-- Import required tables (users, tasks, study_plans, workload_reports)
+- Import database schema from `database/schema.sql`
+- Run it in MySQL Workbench or TiDB SQL editor to create required tables.
 - Ensure database credentials match `.env` file
 
 ### 6. Run the Application
