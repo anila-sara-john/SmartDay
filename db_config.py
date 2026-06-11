@@ -9,7 +9,7 @@ host = os.getenv("DB_HOST")
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 database = os.getenv("DB_NAME")
-
+port = int(os.getenv("DB_PORT", 4000))
 
 def get_connection():
     """Return a MySQL connection to smartday_db, or None on failure."""
@@ -19,6 +19,7 @@ def get_connection():
             user=user,
             password=password,
             database=database,
+            port=port
         )
         return connection
     except Error as e:
