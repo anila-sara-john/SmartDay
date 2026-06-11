@@ -130,8 +130,9 @@ def generate_workload_analysis(tasks, stats, productivity_score):
             f"Estimated Hours: {task['estimated_hours']}\n\n"
         )
 
-    prompt = f"""
-    You are SmartDay's AI workload analyzer.
+    prompt = dedent(f"""
+    You are SmartDay's AI workload analyzer. Your job is to provide a precise, data-driven synthesis of a student's performance based strictly on the metrics and specific tasks provided below. Do not use generic placeholders.
+
 
     Analyze the student's current workload and productivity.
 
@@ -144,48 +145,45 @@ def generate_workload_analysis(tasks, stats, productivity_score):
     Productivity Score: {productivity_score}%
 
     Current Tasks:
-
     {task_text}
 
-    Requirements:
+    Analysis Rules:
 
-    1. Evaluate whether the workload is Light, Moderate, or Heavy. If possible express the workload in percentage figures.
-    2. Identify the most urgent tasks.
-    3. Mention any risks caused by overdue tasks.
-    4. Comment on the student's productivity level.
-    5. Suggest practical actions for the next few days.
-    6. Keep recommendations realistic.
-    7. Encourage consistency and healthy workload management.
-    8. Do not exaggerate or be overly critical.
+    1. Contextual Status: Classify the workload as Light, Moderate, or Heavy. You must explicitly calculate a percentage figure representing their workload volume or completion rate (e.g., using Pending vs Total Tasks).
+    2. Strict Urgency: Identify actual tasks from the list above based on close deadlines or high priority. Do not invent filler task names.
+    3. Risk Assessment: If Expired Tasks > 0, explicitly comment on the risk backlog. If 0, acknowledge their good management.
+    4. Score Reflection: Directly mention the {productivity_score}% productivity score in your assessment text and offer a realistic, encouraging critique.
+    5. Actionable Steps: Provide 3 concrete, specific recommendations using the Task Titles and Categories listed above (e.g., "Allocate time to complete [Task Title]" instead of "Work on your tasks").
 
     Output Format:
-    Do NOT use any markdown characters like '#', '##', '###', '*', '**', '_', or '__'. Use plain text only.
+    Do NOT use any markdown characters like '#', '##', '###', '*', '**', '_', or '__'. Use plain text only. Use the exact text blocks below:
 
     Workload Status:
-    <status text here - must contain either 'light', 'moderate', or 'heavy' to describe the workload>
+    [Your classification: light, moderate, or heavy, along with your computed percentage workload figure]
 
     Productivity Assessment:
-    <assessment text here>
+    [A brief, clear paragraph directly referencing the {productivity_score}% score and the task backlog/completion ratio]
 
     Urgent Tasks:
-    - task 1
-    - task 2
+    - [Insert exact Task Title 1 with its category/deadline]
+    - [Insert exact Task Title 2 with its category/deadline]
 
     Recommendations:
-    - recommendation 1
-    - recommendation 2
-    - recommendation 3
+    - [Specific actionable recommendation mentioning an active Task Title]
+    - [Specific actionable recommendation targeting an active Task Category]
+    - [A workload balancing or consistency recommendation tailored to their data]
 
     Important Instructions:
 
-    - Return only the analysis.
+    - Return only the raw analysis text blocks.
     - Do not use markdown headers (like #, ##, ###) or bold tags (like **).
     - Do not ask questions.
     - Do not offer additional help.
     - Do not mention that you are an AI.
-    - Do not include introductions or conclusions.
-    - Keep the response concise and ready to display directly in the SmartDay application.
+    - Do not include introductions, pleasantries or conclusions.
+    - Keep the response concise, blunt yet encouraging, and ready to display directly in the SmartDay application.
     """
+    )
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
