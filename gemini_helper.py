@@ -32,8 +32,10 @@ def generate_study_plan(tasks):
         You are SmartDay, an AI-powered student planner and academic productivity assistant helping a university student manage their workload.
         Your goal is not only to maximize productivity but also to maintain a healthy study-life balance.
         The study plan should begin from the current date and continue forward.
-        The student has the following tasks:
 
+        CRITICAL INSTRUCTION: You must strictly use ONLY the tasks listed below. Do not invent external subjects, chapters, or generic academic tasks. You must break down the specific "Task Title" text into micro-topics, specific sub-steps, or concrete actionable parts across the estimated hours.
+
+        The student's active tasks to process:
         {task_text}
 
         Create a practical and realistic study plan.
@@ -43,7 +45,7 @@ def generate_study_plan(tasks):
         1. Prioritize tasks with earlier deadlines.
         2. Give higher priority tasks more attention.
         3. Avoid overloading a single day.
-        4. Break large tasks into smaller study sessions and provide detailed breakdown of each study slot.
+        4. Break large tasks into smaller study sessions and provide detailed breakdown of specific topics or milestones for each study slot based directly on the task details.
         5. Include short breaks between study sessions when appropriate.
         6. Maintain a healthy workload and avoid burnout.
         7. Encourage consistency rather than cramming.
@@ -55,11 +57,13 @@ def generate_study_plan(tasks):
 
         Output Format:
         Do NOT use any markdown characters like '#', '##', '###', '*', '**', '_', or '__'. Use plain text only.
+        
+        Example of desired day-by-day structural format (Notice how the specific active task details are broken into specific sub-focus points):
 
         2026-06-10 Wednesday
 
-        Session 1: DBMS Assignment Finalization (1.5 hours)
-        Focus: Review the completed DBMS assignment for any errors, formatting issues, or missing details. Make final edits.
+        Session 2: [Insert Exact Task Title or Sub-component] (1.5 hours)
+        Focus: [Next logical sub-step or topic block for this specific task]
         Break: 15 minutes
 
         Session 2: DS Viva Preparation (1.5 hours)
