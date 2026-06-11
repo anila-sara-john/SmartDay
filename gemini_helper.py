@@ -133,7 +133,6 @@ def generate_workload_analysis(tasks, stats, productivity_score):
     prompt = dedent(f"""
     You are SmartDay's AI workload analyzer. Your job is to provide a precise, data-driven synthesis of a student's performance based strictly on the metrics and specific tasks provided below. Do not use generic placeholders.
 
-
     Analyze the student's current workload and productivity.
 
     Dashboard Statistics:
