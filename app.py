@@ -166,7 +166,8 @@ def edit_task(task_id):
 
     # Task doesn't exist
     if not task:
-        error = 'Task not found.'   
+        error = 'Task not found.'
+        return render_template('edit_task.html', task=None, error=error, success=None)
 
     # Security check: only owner can edit
     if task['user_id'] != session['user_id']:
@@ -177,8 +178,8 @@ def edit_task(task_id):
         title = request.form['title']
         category = request.form['category']
         priority = request.form['priority']
-        deadline = request.form['deadline']
-        estimated_hours = request.form['estimated_hours']
+        deadline = request.form['deadline'] or None
+        estimated_hours = request.form['estimated_hours'] or None
         status = request.form['status']
 
         if update_task(task_id, session['user_id'], title, category, priority, deadline, estimated_hours, status):
