@@ -1,0 +1,101 @@
+.progress-ring {
+    width: 140px;
+    height: 140px;
+    position: relative;
+}
+
+.progress-ring svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: #2d333b;
+    stroke-width: 16;
+}
+
+.progress-ring-fill {
+    fill: none;
+    stroke-linecap: round;
+    stroke-width: 16;
+    transition: stroke-dashoffset 1.2s ease-in-out;
+}
+
+.progress-ring-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 140px;
+    height: 140px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 20px;
+    color: #e8eaed;
+
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Custom styling for the AI Analysis CTA */
+.ai-glow-btn {
+    background: linear-gradient(135deg, #0dcaf0, #0d6efd);
+    border: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.ai-glow-btn:hover {
+    transform: scale(1.08) translateY(-2px);
+    /* Makes the button physically bigger and lift up */
+    background: linear-gradient(135deg, #0a58ca, #0b5ed7);
+    /* Smooth shift in color depth */
+    box-shadow: 0 12px 24px rgba(13, 110, 253, 0.45) !important;
+    /* Stronger, deeper shadow profile */
+    color: #ffffff !important;
+}
+
+.ai-glow-btn:active {
+    transform: scale(0.98);
+    /* Snaps slightly smaller on actual mouse click */
+}
+
+/* Optional subtle pulse effect to draw focus */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(13, 202, 240, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(13, 202, 240, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(13, 202, 240, 0);
+    }
+}
+
+.ai-glow-btn {
+    animation: pulseGlow 2s infinite;
+}
+
+/* Custom dashed border for empty states and placeholders */
+.border-dashed {
+    border-style: dashed !important;
+    border-width: 1.5px !important;
+}
+
+/* Modern hover effect for interactive cards */
+.card-hover {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3) !important;
+}

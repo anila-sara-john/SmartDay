@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}Workload Insights — SmartDay{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <!-- Header Section -->
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
+                <div>
+                    <p class="text-primary text-uppercase fw-semibold mb-1 small" style="letter-spacing: 0.8px;">AI
+                        Insights</p>
+                    <h1 class="h2 fw-bold mb-0">Workload Analysis</h1>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary fw-semibold">Back to
+                        Dashboard</a>
+                </div>
+            </div>
+
+            {% if report %}
+            {% if parsed_report and (parsed_report.status or parsed_report.assessment) %}
+
+            <!-- 🚨 WORKLOAD LEVEL ALERT BANNER -->
+            {% if parsed_report.level == 'Heavy' %}
+            <div class="alert alert-danger border-0 rounded-4 p-4 mb-4 shadow-sm d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between"
+                style="background-color: rgba(220, 53, 69, 0.12); border-left: 5px solid #dc3545 !important;">
+                <div>
+                    <h4 class="h5 fw-bold text-danger mb-1">⚠️ High Burnout Risk Detected!</h4>
+                    <p class="text-secondary small mb-0">Your current task load is heavier than suggested. Consider
+                        rescheduling or breaking down tasks.</p>
+                </div>
+
+            </div>
+            {% elif parsed_report.level == 'Moderate' %}
+            <div class="alert alert-warning border-0 rounded-4 p-4 mb-4 shadow-sm d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between"
+                style="background-color: rgba(255, 193, 7, 0.12); border-left: 5px solid #ffc107 !important;">
+                <div>
+                    <h4 class="h5 fw-bold text-warning mb-1">⚡ Busy Schedule Ahead</h4>
+                    <p class="text-secondary small mb-0">Your workload is moderate. Keep consistent study blocks to
+                        avoid last-minute rush.</p>
+                </div>
+
+            </div>
+            {% else %}
+            <div class="alert alert-success border-0 rounded-4 p-4 mb-4 shadow-sm d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between"
+                style="background-color: rgba(40, 167, 69, 0.12); border-left: 5px solid #28a745 !important;">
+                <div>
+                    <h4 class="h5 fw-bold text-success mb-1">✅ Healthy Study Balance</h4>
+                    <p class="text-secondary small mb-0">Your current tasks list shows a healthy balance. Great job
+                        managing your workload!</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Meta Details -->
+            <div class="mb-4 text-secondary small ps-1">
+                Report generated on <span class="text-white-50 fw-semibold">{{ report.created_at }}</span>
+            </div>
+
+            <!-- 🧠 ASSESSMENT CARD -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 card-hover"
+                style="background-color: var(--bs-card-bg); border: 1px solid var(--bs-border-color) !important;">
+                <div class="card-body p-4 p-md-5">
+                    <h4 class="h5 fw-bold text-white mb-3 d-flex align-items-center gap-2">
+                        <span class="text-primary">🧠</span> AI Productivity Assessment
+                    </h4>
+                    <p class="text-secondary small mb-0 lh-lg" style="font-size: 0.95rem;">
+                        {{ parsed_report.assessment }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- 🚨 URGENT PRIORITIES COLUMN -->
+                {% if parsed_report.urgent_tasks %}
+                <div class="col-md-5">
+                    <div class="card border-0 border-start border-danger border-4 shadow-sm rounded-4 h-100 card-hover"
+                        style="background-color: var(--bs-card-bg);">
+                        <div class="card-body p-4">
+                            <h4 class="h6 fw-bold text-danger mb-3 d-flex align-items-center gap-2">
+                                🚨 Urgent Priorities
+                            </h4>
+
+                            <div class="d-flex flex-column gap-2.5">
+                                {% for task in parsed_report.urgent_tasks %}
+                                <div
+                                    class="d-flex align-items-center gap-2.5 py-2 border-bottom border-secondary border-opacity-10 last-border-0">
+                                    <span class="text-danger fs-5">•</span>
+                                    <span class="text-white-50 fw-semibold small">{{ task }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 💡 AI RECOMMENDATIONS COLUMN -->
+                <div class="{% if parsed_report.urgent_tasks %}col-md-7{% else %}col-12{% endif %}">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 card-hover"
+                        style="background-color: var(--bs-card-bg); border: 1px solid var(--bs-border-color) !important;">
+                        <div class="card-body p-4">
+                            <h4 class="h6 fw-bold text-primary mb-4 d-flex align-items-center gap-2">
+                                💡 AI Recommendations
+                            </h4>
+
+                            <div class="d-flex flex-column gap-3.5">
+                                {% for rec in parsed_report.recommendations %}
+                                <div class="d-flex align-items-start gap-3">
+                                    <span class="text-success fs-5">✓</span>
+                                    <p class="text-secondary small mb-0 lh-base">{{ rec }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% else %}
+            <!-- 📝 FALLBACK: RAW DISPLAY -->
+            <div class="card border-0 shadow rounded-4"
+                style="background-color: var(--bs-card-bg); border: 1px solid var(--bs-border-color) !important;">
+                <div class="card-body p-4 p-md-5">
+                    <h4 class="h5 fw-bold text-white mb-4">AI Workload Report</h4>
+                    <div style="white-space: pre-line; font-size: 0.95rem; line-height: 1.7;" class="text-secondary">
+                        {{ report.report_text }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+
+            <!-- 📭 EMPTY STATE EXPERIENCE -->
+            <div class="card border-0 shadow-lg text-center p-5 rounded-4"
+                style="background-color: var(--bs-card-bg); border: 1px solid var(--bs-border-color) !important;">
+                <div class="card-body py-5">
+                    <div class="rounded-circle icon-accent d-inline-flex align-items-center justify-content-center p-4 mb-4"
+                        style="width: 80px; height: 80px; font-size: 2rem; background-color: rgba(77, 159, 255, 0.12);">
+                        📊
+                    </div>
+                    <h2 class="h3 fw-bold text-white mb-2">No Workload Analysis Yet</h2>
+                    <p class="text-secondary mx-auto mb-4" style="max-width: 480px;">
+                        Workload analysis is automatically generated when you create or update a study plan. Generate
+                        your first study plan to get started!
+                    </p>
+                    <a href="{{ url_for('generate_plan') }}" class="btn btn-primary btn-lg px-4 fw-semibold shadow-sm">
+                        Create Study Plan
+                    </a>
+                </div>
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

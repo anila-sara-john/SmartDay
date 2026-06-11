@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}SmartDay — AI-Powered Student Planner{% endblock %}
+
+{% block content %}
+<section class="hero-section text-white py-5">
+    <div class="container py-lg-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <p class="text-primary text-uppercase fw-semibold mb-2 small">Plan smarter. Stress less.</p>
+                <h1 class="display-4 fw-bold mb-3">Your AI-Powered Student Planner</h1>
+                <p class="lead mb-4 text-secondary">
+                    SmartDay turns deadlines, classes, and commitments into a balanced daily schedule—so you always know what to work on next.
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-4 fw-semibold">Get Started</a>
+                    <a href="#features" class="btn btn-outline-primary btn-lg px-4">See Features</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<section id="features" class="py-5 section-alt">
+    <div class="container py-lg-4">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-8">
+                <h2 class="fw-bold">Built for busy students</h2>
+                <p class="text-secondary lead mb-0">
+                    Everything you need to stay organized, avoid burnout, and make steady progress on every assignment.
+                </p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rounded-3 icon-accent d-inline-flex p-3 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                                <path d="M9.5 7a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="h5 card-title fw-semibold">AI Schedule Generation</h3>
+                        <p class="card-text text-secondary mb-0">
+                            Automatically build realistic daily plans around your classes, exams, and personal time—updated as your week changes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rounded-3 icon-accent d-inline-flex p-3 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
+                            </svg>
+                        </div>
+                        <h3 class="h5 card-title fw-semibold">Workload Analysis</h3>
+                        <p class="card-text text-secondary mb-0">
+                            See where your time is going, spot overloaded days early, and get recommendations to keep your semester sustainable.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="rounded-3 icon-accent d-inline-flex p-3 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 1 0v-7a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                        </div>
+                        <h3 class="h5 card-title fw-semibold">Task Breakdown</h3>
+                        <p class="card-text text-secondary mb-0">
+                            Turn big projects into clear, actionable steps with time estimates—so you can start confidently instead of procrastinating.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

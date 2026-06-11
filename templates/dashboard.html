@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — SmartDay{% endblock %}
+
+{% macro ring(percent, color, label) %}
+<div class="text-center">
+    <div class="progress-ring mx-auto mb-2">
+        <svg width="140" height="140" style="transform: rotate(-90deg);">
+            <!-- Background circle (track) -->
+            <circle class="progress-ring-bg" cx="70" cy="70" r="50"></circle>
+            <!-- Foreground animated circle (fill) -->
+            <circle class="progress-ring-fill" cx="70" cy="70" r="50" stroke="{{ color }}" stroke-width="16"
+                data-percent="{{ percent }}" stroke-dasharray="314.16" stroke-dashoffset="314.16">
+            </circle>
+        </svg>
+        <div class="progress-ring-text">
+            {{ percent }}%
+        </div>
+    </div>
+    <div class="small fw-semibold text-secondary" style="font-size: 0.85rem;">{{ label }}</div>
+</div>
+{% endmacro %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Welcome Header Section -->
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-5">
+        <div>
+            <p class="text-primary text-uppercase fw-semibold mb-1 small" style="letter-spacing: 0.8px;">Dashboard Overview</p>
+            <h1 class="h2 fw-bold mb-0">Welcome, {{ user_name }}!</h1>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('tasks') }}" class="btn btn-outline-primary fw-semibold px-4">My Tasks</a>
+            <a href="{{ url_for('add_task') }}" class="btn btn-primary fw-semibold px-4">+ Add Task</a>
+        </div>
+    </div>
+
+    {% if stats.total_tasks == 0 %}
+    <!-- 📭 EMPTY STATE EXPERIENCE -->
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-lg text-center p-5 rounded-4" style="background-color: var(--bs-card-bg); border: 1px solid var(--bs-border-color) !important;">
+                <div class="card-body py-5">
+                    <div class="rounded-circle icon-accent d-inline-flex align-items-center justify-content-center p-4 mb-4" style="width: 90px; height: 90px; font-size: 2.5rem; background-color: rgba(77, 159, 255, 0.12);">
+                        🚀
+                    </div>
+                    <h2 class="h3 fw-bold text-white mb-3">Welcome to SmartDay!</h2>
+                    <p class="text-secondary mx-auto mb-5 lead" style="max-width: 580px; font-size: 1.05rem;">
+                        SmartDay is your AI-powered student planner and academic productivity assistant. Add your tasks, exams, and classes, and let AI build balanced daily study plans for you.
+                    </p>
+                    
+                    <div class="row justify-content-center g-4 text-start mb-5" style="max-width: 650px; margin: 0 auto;">
+                        <div class="col-sm-6">
+                            <div class="d-flex gap-3">
+                                <span class="fs-3">📋</span>
+                                <div>
+                                    <h6 class="fw-semibold text-white mb-1">Visual Task Management</h6>
+                                    <p class="small text-secondary mb-0">List and organize your study sessions, lab works, and project milestones.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex gap-3">
+                                <span class="fs-3">🧠</span>
+                                <div>
+                                    <h6 class="fw-semibold text-white mb-1">AI Study Planning</h6>
+                                    <p class="small text-secondary mb-0">Generate personalized daily study slots, balancing workloads to prevent burnout.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                        <a href="{{ url_for('add_task') }}" class="btn btn-primary btn-lg px-5 fw-semibold shadow-sm">
+                            Create First Task
+                        </a>
+                        <button class="btn btn-outline-secondary btn-lg px-4 fw-semibold" disabled title="Add tasks first to generate a study plan">
+                            Create Study Plan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    
+    <!-- 📊 ACTIVE DASHBOARD EXPERIENCE -->
+
+    <!-- Grouped Statistics Banner -->
+    <div class="card border shadow-sm rounded-4 mb-5" style="background-color: var(--bs-card-bg);">
+        <div class="card-body p-4">
+            <div class="row text-center g-3">
+                <div class="col-6 col-md-3 position-relative py-2">
+                    <div class="text-secondary small mb-1">📋 Total Tasks</div>
+                    <div class="fs-2 fw-bold text-white">{{ stats.total_tasks }}</div>
+                    <div class="d-none d-md-block position-absolute top-50 end-0 translate-middle-y" style="width: 1px; height: 50%; background-color: var(--bs-border-color);"></div>
+                </div>
+                <div class="col-6 col-md-3 position-relative py-2">
+                    <div class="text-secondary small mb-1">⏳ Pending</div>
+                    <div class="fs-2 fw-bold text-warning">{{ stats.pending_tasks }}</div>
+                    <div class="d-none d-md-block position-absolute top-50 end-0 translate-middle-y" style="width: 1px; height: 50%; background-color: var(--bs-border-color);"></div>
+                </div>
+                <div class="col-6 col-md-3 position-relative py-2">
+                    <div class="text-secondary small mb-1">✅ Completed</div>
+                    <div class="fs-2 fw-bold text-success">{{ stats.completed_tasks }}</div>
+                    <div class="d-none d-md-block position-absolute top-50 end-0 translate-middle-y" style="width: 1px; height: 50%; background-color: var(--bs-border-color);"></div>
+                </div>
+                <div class="col-6 col-md-3 py-2">
+                    <div class="text-secondary small mb-1">⚠️ Overdue</div>
+                    <div class="fs-2 fw-bold text-danger">{{ stats.expired_tasks }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Content Grid -->
+    <div class="row g-4">
+        
+        <!-- Left Side: Productivity Metrics -->
+        <div class="col-lg-6">
+            <div class="card border shadow-sm rounded-4 h-100" style="background-color: var(--bs-card-bg);">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="h5 fw-bold mb-0">Productivity Status</h4>
+                        
+                        <!-- Dynamic Productivity Badge -->
+                        {% if productivity_score >= 80 %}
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2">🔥 Excelling ({{ productivity_score }}%)</span>
+                        {% elif productivity_score >= 50 %}
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2">⚡ Steady ({{ productivity_score }}%)</span>
+                        {% else %}
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-2">📈 Needs Focus ({{ productivity_score }}%)</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="text-secondary small mb-5">
+                        Your academic productivity metrics are computed live based on completion ratios and deadline success. Stay consistent to boost your score!
+                    </p>
+
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            {{ ring(productivity_score, "#4d9fff", "Productivity Score") }}
+                        </div>
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            {{ ring(completion_rate, "#28a745", "Completion Rate") }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ ring(deadline_rate, "#ffc107", "Deadline Success") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: AI Productivity Insights -->
+        <div class="col-lg-6">
+            <div class="d-flex flex-column gap-4 h-100">
+                
+                <!-- AI Study Plan card -->
+                <div class="card border shadow-sm rounded-4 flex-grow-1 card-hover" style="background-color: var(--bs-card-bg);">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h4 class="h5 fw-bold mb-1">🧠 AI Study Plan</h4>
+                                <p class="text-secondary small mb-0">Your customized day-by-day learning schedule</p>
+                            </div>
+                            {% if plan %}
+                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1">Active Plan</span>
+                            {% else %}
+                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill px-2.5 py-1">No Plan</span>
+                            {% endif %}
+                        </div>
+
+                        
+
+                        <div class="d-flex gap-2">
+                            {% if plan %}
+                            <a href="{{ url_for('study_plan') }}" class="btn btn-outline-primary btn-sm fw-semibold">View current plan</a>
+                            <a href="{{ url_for('generate_plan') }}" class="btn btn-primary btn-sm fw-semibold">Update current plan</a>
+                            {% else %}
+                            <a href="{{ url_for('generate_plan') }}" class="btn btn-primary btn-sm fw-semibold w-100">Create Study Plan</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Workload Analysis card -->
+                <div class="card border shadow-sm rounded-4 flex-grow-1 card-hover" style="background-color: var(--bs-card-bg);">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h4 class="h5 fw-bold mb-1">📊 AI Workload Analysis</h4>
+                                <p class="text-secondary small mb-0">Academic stress & overload indicators</p>
+                            </div>
+                            {% if report and parsed_report %}
+                                {% if parsed_report.level == 'Heavy' %}
+                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-1">Heavy Workload</span>
+                                {% elif parsed_report.level == 'Moderate' %}
+                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill px-2.5 py-1">Moderate Workload</span>
+                                {% else %}
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1">Light Workload</span>
+                                {% endif %}
+                            {% elif report %}
+                            <span class="badge bg-info-subtle text-info border border-info-subtle rounded-pill px-2.5 py-1">Analyzed</span>
+                            {% else %}
+                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill px-2.5 py-1">No Analysis</span>
+                            {% endif %}
+                        </div>
+
+                        
+
+                        <div class="d-flex gap-2">
+                            {% if report %}
+                            <a href="{{ url_for('workload_analysis') }}" class="btn btn-primary btn-sm fw-semibold">View workload insights</a>
+                            {% else %}
+                            <span class="text-secondary small">Workload analysis will be generated automatically when you create a study plan.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}

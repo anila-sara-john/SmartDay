@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Add Task — SmartDay{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border shadow">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="text-center mb-1 fw-bold">Add a new task</h2>
+                    <p class="text-center text-secondary mb-4">Keep track of assignments, study blocks, and deadlines
+                    </p>
+
+                    {% if success %}
+                    <div class="alert alert-success" role="alert">{{ success }}</div>
+                    {% endif %}
+
+                    <form class="needs-validation" novalidate action="{{ url_for('add_task') }}" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="title">Title</label>
+                            <input type="text" class="form-control" id="title" name="title"
+                                placeholder="e.g. Complete DBMS lab report" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="category">Category</label>
+                            <input type="text" class="form-control" id="category" name="category"
+                                placeholder="e.g. Assignment, Exam, Study">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="priority">Priority</label>
+                            <select class="form-select" id="priority" name="priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="deadline">Deadline</label>
+                            <input type="date" class="form-control" id="deadline" name="deadline" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" for="estimated_hours">Estimated Hours</label>
+                            <input type="number" class="form-control" id="estimated_hours" name="estimated_hours"
+                                placeholder="e.g. 2.5" step="0.1" min="0">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 fw-semibold">
+                            Add Task
+                        </button>
+                    </form>
+
+                    <p class="text-center text-secondary mt-4 mb-0 small">
+                        <a href="{{ url_for('dashboard') }}" class="text-decoration-none">Back to Dashboard</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

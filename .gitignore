@@ -1,0 +1,18 @@
+# Environment variables (VERY IMPORTANT)
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# Cursor settings
+.cursor/
+
+# Windows system files
+Thumbs.db
+
+# macOS system files
+.DS_Store
