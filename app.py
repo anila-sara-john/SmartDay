@@ -480,7 +480,7 @@ def workload_analysis():
 @app.route('/generate-analysis')
 def generate_analysis():
     if 'user_id' not in session:
-        return redirect(url_for('/login'))
+        return redirect(url_for('login'))
 
     tasks = get_tasks_by_user(session['user_id'])
     stats = get_dashboard_stats(session['user_id'])
