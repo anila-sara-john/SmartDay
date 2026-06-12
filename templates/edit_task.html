@@ -17,7 +17,7 @@
             <div class="card border shadow">
                 <div class="card-body p-4 p-md-5">
 
-                    <form class="needs-validation" novalidate action="{{ url_for('edit_task', task_id=task.id) }}"
+                    <form action="{{ url_for('edit_task', task_id=task.id) }}"
                         method="POST">
 
                         {% if success %}
@@ -43,7 +43,7 @@
                                 Category
                             </label>
                             <input type="text" class="form-control" id="category" name="category"
-                                value="{{ task.category }}" required>
+                                value="{{ task.category }}">
                         </div>
 
                         <div class="row">
