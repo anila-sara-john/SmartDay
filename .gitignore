@@ -16,3 +16,7 @@ Thumbs.db
 
 # macOS system files
 .DS_Store
+
+# Resources
+SmartDay_Project_Documentation.md
+CREATE Statements.docx
