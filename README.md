@@ -2,7 +2,7 @@
 
 SmartDay is a full-stack AI-powered web application designed to help university students manage academic workload, plan study schedules intelligently, and improve productivity using real-time data and generative AI.
 
-It combines traditional task management with Google Gemini AI to automatically generate personalized study plans and workload insights based on a student’s deadlines, priorities, and estimated effort.
+It combines traditional task management with Google Gemini AI to generate personalized study plans and workload insights based on a student’s deadlines, priorities, and estimated effort.
 
 Built with Flask, MySQL, and Bootstrap, SmartDay transforms scattered academic tasks into a structured, AI-driven daily plan that helps students avoid procrastination, balance workload, and stay consistent.
 
