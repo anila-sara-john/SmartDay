@@ -457,10 +457,10 @@ def generate_plan():
         deadline_rate = round(((total - stats['expired_tasks']) / total) * 100)
         productivity_score = round((completion_rate * 0.8) + (deadline_rate * 0.2))
 
-    analysis = generate_workload_analysis(tasks, stats, productivity_score)
+    #analysis = generate_workload_analysis(tasks, stats, productivity_score)
 
-    if analysis != "Analysis could not be generated at the moment. Please try again later":
-        save_workload_report(session['user_id'], analysis)
+    #if analysis != "Analysis could not be generated at the moment. Please try again later":
+        #save_workload_report(session['user_id'], analysis)
     
     return redirect(url_for('study_plan'))
 
