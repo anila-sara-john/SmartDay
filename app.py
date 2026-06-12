@@ -500,7 +500,7 @@ def generate_analysis():
     if analysis != "Analysis could not be generated at the moment. Please try again later":
         save_workload_report(session['user_id'], analysis)
 
-    return redirect(url_for('/workload_analysis'))
+    return redirect(url_for('workload_analysis'))
 
 if __name__ == '__main__':
     app.run(debug=True)
