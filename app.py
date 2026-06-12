@@ -443,7 +443,45 @@ def generate_plan():
 
     save_study_plan(session['user_id'], generated_plan)
 
-    # Automatically generate workload analysis when study plan is updated
+    '''# Automatically generate workload analysis when study plan is updated
+    tasks = get_tasks_by_user(session['user_id'])
+    stats = get_dashboard_stats(session['user_id'])
+    
+    total = stats['total_tasks'] if stats else 0
+    completion_rate = 0
+    deadline_rate = 0
+    productivity_score = 0
+
+    if total > 0:
+        completion_rate = round((stats['completed_tasks'] / total) * 100)
+        deadline_rate = round(((total - stats['expired_tasks']) / total) * 100)
+        productivity_score = round((completion_rate * 0.8) + (deadline_rate * 0.2))
+
+    #analysis = generate_workload_analysis(tasks, stats, productivity_score)
+
+    #if analysis != "Analysis could not be generated at the moment. Please try again later":
+        #save_workload_report(session['user_id'], analysis)
+    '''
+    return redirect(url_for('study_plan'))
+
+
+@app.route('/workload-analysis')
+def workload_analysis():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    report = get_latest_workload_report(session['user_id'])
+    parsed_report = None
+    if report:
+        parsed_report = parse_workload_report(report['report_text'])
+
+    return render_template('workload_analysis.html', report=report, parsed_report=parsed_report)
+
+@app.route('/generate-analysis')
+def generate_analysis():
+    if 'user_id' not in session:
+        return redirect(url_for('/login'))
+
     tasks = get_tasks_by_user(session['user_id'])
     stats = get_dashboard_stats(session['user_id'])
     
@@ -461,23 +499,8 @@ def generate_plan():
 
     if analysis != "Analysis could not be generated at the moment. Please try again later":
         save_workload_report(session['user_id'], analysis)
-    
-    return redirect(url_for('study_plan'))
 
-
-@app.route('/workload-analysis')
-def workload_analysis():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-
-    report = get_latest_workload_report(session['user_id'])
-    parsed_report = None
-    if report:
-        parsed_report = parse_workload_report(report['report_text'])
-
-    return render_template('workload_analysis.html', report=report, parsed_report=parsed_report)
-
-
+    return redirect(url_for('/workload_analysis'))
 
 if __name__ == '__main__':
     app.run(debug=True)
