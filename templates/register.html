@@ -22,17 +22,17 @@
                     <form action="{{ url_for('register') }}" method="POST">
                         <div class="mb-3">
                             <label class="form-label" for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Your full name" value="{{ name }}">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your full name" value="{{ name }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="you@university.edu" value="{{ email }}">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="you@university.edu" value="{{ email }}" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label" for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 fw-semibold">
